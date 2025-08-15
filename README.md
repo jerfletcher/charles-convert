@@ -2,7 +2,63 @@
 
 Convert Charles Proxy session files (`.chls` and `.chrlz`) to HTTP Archive format (`.har`) using a containerized approach.
 
-## Quick Start
+## Installation
+
+### User Installation (Recommended)
+
+Install `chls-to-har` to your user directory (no sudo required):
+
+```bash
+git clone <repository-url>
+cd charles-convert
+./install.sh
+```
+
+The script will be installed to `~/.local/bin` and automatically ensure it's executable.
+
+### System-wide Installation
+
+Install system-wide (requires sudo):
+
+```bash
+./install.sh --system
+```
+
+### Custom Installation Directory
+
+Install to a custom directory:
+
+```bash
+./install.sh --install-dir /path/to/directory
+```
+
+After installation, you can use `chls-to-har` from anywhere:
+
+```bash
+chls-to-har session.chls
+```
+
+### Custom Installation Directory
+
+Install to a custom directory (e.g., your home directory):
+
+```bash
+./install.sh --install-dir ~/.local/bin
+```
+
+Make sure the installation directory is in your PATH:
+
+```bash
+export PATH="$HOME/.local/bin:$PATH"
+```
+
+### Uninstall
+
+```bash
+sudo ./install.sh --uninstall
+```
+
+### Manual Usage (Without Installation)
 
 1. **Clone and run:**
    ```bash
@@ -11,7 +67,14 @@ Convert Charles Proxy session files (`.chls` and `.chrlz`) to HTTP Archive forma
    ./chls-to-har.sh your-session-file.chls
    ```
 
-That's it! The script will automatically check for Docker, build the conversion image if needed, and convert your file.
+## Quick Start
+
+After installation:
+```bash
+chls-to-har your-session-file.chls
+```
+
+The HAR file will be created in your current working directory.
 
 ## Prerequisites
 

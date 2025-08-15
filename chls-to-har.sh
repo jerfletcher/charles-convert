@@ -134,16 +134,21 @@ validate_input_file() {
 get_output_filename() {
     local input="$1"
     local basename
+    local filename_only
+    
+    # Get just the filename without path
+    filename_only="$(basename "$input")"
     
     # Remove .chls or .chrlz extension and add .har
-    if [[ "$input" =~ \.chrlz$ ]]; then
-        basename="${input%.chrlz}"
-    elif [[ "$input" =~ \.chls$ ]]; then
-        basename="${input%.chls}"
+    if [[ "$filename_only" =~ \.chrlz$ ]]; then
+        basename="${filename_only%.chrlz}"
+    elif [[ "$filename_only" =~ \.chls$ ]]; then
+        basename="${filename_only%.chls}"
     else
-        basename="$input"
+        basename="$filename_only"
     fi
     
+    # Return filename in current working directory
     echo "${basename}.har"
 }
 
@@ -157,17 +162,20 @@ convert_file() {
     # Get absolute paths for Docker volume mounting
     local input_dir
     local input_name
+    local current_dir
     input_dir="$(dirname "$(realpath "$input_file")")"
     input_name="$(basename "$input_file")"
+    current_dir="$(pwd)"
     
     local output_name
     output_name="$(basename "$output_file")"
     
-    # Run the Docker container
+    # Run the Docker container with both input and output directories mounted
     if docker run --rm \
-        -v "$input_dir:/data" \
+        -v "$input_dir:/input" \
+        -v "$current_dir:/output" \
         "$DOCKER_IMAGE" \
-        convert "/data/$input_name" "/data/$output_name"; then
+        convert "/input/$input_name" "/output/$output_name"; then
         
         if [ -f "$output_file" ]; then
             local file_size
@@ -229,6 +237,10 @@ main() {
         if [[ ! $REPLY =~ ^[Yy]$ ]]; then
             print_info "Conversion cancelled"
             exit 0
+        else
+            # Remove existing file since user confirmed overwrite
+            rm "$output_file"
+            print_info "Removed existing file"
         fi
     fi
     
