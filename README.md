@@ -1,15 +1,43 @@
 # Charles to HAR Converter
 
-Convert Charles Proxy session files (`.chls` and `.chrlz`) to HTTP Archive format (`.har`) using a containerized approach.
+Convert Charles Proxy session files (`.chls` and `.chrlz`) to HTTP Archive format (`.har`) using a containerized approach with drag-and-drop support on macOS.
 
-## Installation
+## 🚀 Quick Setup (macOS)
 
-### User Installation (Recommended)
+**One-command setup for macOS users:**
+
+```bash
+git clone https://github.com/jerfletcher/charles-convert.git
+cd charles-convert
+./setup-mac.sh
+```
+
+This will:
+- ✅ Check and help install Docker if needed
+- ✅ Build the conversion Docker image
+- ✅ Create a drag-and-drop application on your Desktop
+- ✅ Install command-line tools
+- ✅ Test the conversion
+
+After setup, you can:
+- **Drag & Drop**: Drag `.chls` files onto the "Charles to HAR Converter.app" 
+- **Command Line**: Use `chls-to-har your-file.chls`
+
+## Installation Options
+
+### macOS Users (Recommended)
+```bash
+git clone https://github.com/jerfletcher/charles-convert.git
+cd charles-convert
+./setup-mac.sh
+```
+
+### Manual Installation
 
 Install `chls-to-har` to your user directory (no sudo required):
 
 ```bash
-git clone <repository-url>
+git clone https://github.com/jerfletcher/charles-convert.git
 cd charles-convert
 ./install.sh
 ```
@@ -32,49 +60,20 @@ Install to a custom directory:
 ./install.sh --install-dir /path/to/directory
 ```
 
-After installation, you can use `chls-to-har` from anywhere:
-
-```bash
-chls-to-har session.chls
-```
-
-### Custom Installation Directory
-
-Install to a custom directory (e.g., your home directory):
-
-```bash
-./install.sh --install-dir ~/.local/bin
-```
-
-Make sure the installation directory is in your PATH:
-
-```bash
-export PATH="$HOME/.local/bin:$PATH"
-```
-
-### Uninstall
-
-```bash
-sudo ./install.sh --uninstall
-```
-
-### Manual Usage (Without Installation)
-
-1. **Clone and run:**
-   ```bash
-   git clone <repository-url>
-   cd charles-convert
-   ./chls-to-har.sh your-session-file.chls
-   ```
-
 ## Quick Start
 
+### macOS Drag & Drop
+1. Run `./setup-mac.sh` once
+2. Drag `.chls` or `.chrlz` files onto the "Charles to HAR Converter.app"
+3. The `.har` file appears in the same folder as your original file
+
+### Command Line
 After installation:
 ```bash
 chls-to-har your-session-file.chls
 ```
 
-The HAR file will be created in your current working directory.
+The HAR file will be created in the same directory as your input file.
 
 ## Prerequisites
 
